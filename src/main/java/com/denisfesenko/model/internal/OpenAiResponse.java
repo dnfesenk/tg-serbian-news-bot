@@ -63,4 +63,16 @@ public class OpenAiResponse {
         this.usage = usage;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "OpenAiResponse{" +
+                "id='" + id + '\'' +
+                ", object='" + object + '\'' +
+                ", created=" + created +
+                ", model='" + model + '\'' +
+                ", choices=" + choices +
+                ", usage=" + usage +
+                '}';
+    }
 }

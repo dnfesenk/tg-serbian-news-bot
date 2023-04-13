@@ -1,13 +1,11 @@
 package com.denisfesenko.model.internal;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 public class OpenAiRequest {
     private String model;
-    private String prompt;
-    @JsonProperty("max_tokens")
-    private int maxTokens;
-    private float temperature;
+    private List<Message> messages;
+    private double temperature;
 
     public String getModel() {
         return model;
@@ -18,30 +16,30 @@ public class OpenAiRequest {
         return this;
     }
 
-    public String getPrompt() {
-        return prompt;
+    public List<Message> getMessages() {
+        return messages;
     }
 
-    public OpenAiRequest setPrompt(String prompt) {
-        this.prompt = prompt;
+    public OpenAiRequest setMessages(List<Message> messages) {
+        this.messages = messages;
         return this;
     }
 
-    public int getMaxTokens() {
-        return maxTokens;
-    }
-
-    public OpenAiRequest setMaxTokens(int maxTokens) {
-        this.maxTokens = maxTokens;
-        return this;
-    }
-
-    public float getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public OpenAiRequest setTemperature(float temperature) {
+    public OpenAiRequest setTemperature(double temperature) {
         this.temperature = temperature;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "OpenAiRequest{" +
+                "model='" + model + '\'' +
+                ", messages=" + messages +
+                ", temperature=" + temperature +
+                '}';
     }
 }

@@ -3,18 +3,26 @@ package com.denisfesenko.model.internal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Choice {
-    private String text;
-    private int index;
-    private Object logprobs;
+    private Message message;
     @JsonProperty("finish_reason")
     private String finishReason;
+    private int index;
 
-    public String getText() {
-        return text;
+    public Message getMessage() {
+        return message;
     }
 
-    public Choice setText(String text) {
-        this.text = text;
+    public Choice setMessage(Message message) {
+        this.message = message;
+        return this;
+    }
+
+    public String getFinishReason() {
+        return finishReason;
+    }
+
+    public Choice setFinishReason(String finishReason) {
+        this.finishReason = finishReason;
         return this;
     }
 
@@ -27,21 +35,12 @@ public class Choice {
         return this;
     }
 
-    public Object getLogprobs() {
-        return logprobs;
-    }
-
-    public Choice setLogprobs(Object logprobs) {
-        this.logprobs = logprobs;
-        return this;
-    }
-
-    public String getFinishReason() {
-        return finishReason;
-    }
-
-    public Choice setFinishReason(String finishReason) {
-        this.finishReason = finishReason;
-        return this;
+    @Override
+    public String toString() {
+        return "Choice{" +
+                "message=" + message +
+                ", finishReason='" + finishReason + '\'' +
+                ", index=" + index +
+                '}';
     }
 }

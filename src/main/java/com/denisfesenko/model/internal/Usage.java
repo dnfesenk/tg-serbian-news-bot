@@ -36,4 +36,13 @@ public class Usage {
         this.totalTokens = totalTokens;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Usage{" +
+                "promptTokens=" + promptTokens +
+                ", completionTokens=" + completionTokens +
+                ", totalTokens=" + totalTokens +
+                '}';
+    }
 }
