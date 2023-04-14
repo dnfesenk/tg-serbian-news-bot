@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class OpenAiService {
-    private final OkHttpClient httpClient = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
+    private final OkHttpClient httpClient = new OkHttpClient.Builder().readTimeout(120, TimeUnit.SECONDS).build();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(OpenAiService.class);
 

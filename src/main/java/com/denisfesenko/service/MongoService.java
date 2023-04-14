@@ -10,8 +10,8 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class MongoService {
 
@@ -19,7 +19,7 @@ public class MongoService {
 
     public static Map<String, String> filterAndAddRecords(Map<String, String> news) {
         logger.info("Filtering and adding news records...");
-        Map<String, String> filteredNews = new TreeMap<>();
+        Map<String, String> filteredNews = new HashMap<>();
         try (MongoClient mongoClient = MongoClients.create(System.getenv("MONGO_CONNECTION_STRING"))) {
             MongoDatabase database = mongoClient.getDatabase(Constants.MONGO_DATABASE_NAME);
             MongoCollection<Document> collection = database.getCollection(Constants.MONGO_COLLECTION_NAME);

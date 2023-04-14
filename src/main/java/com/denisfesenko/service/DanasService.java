@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -32,7 +32,7 @@ public class DanasService {
             futures.add(executorService.submit(new NewsFetcher(danasUrl)));
         }
 
-        Map<String, String> result = new TreeMap<>();
+        Map<String, String> result = new HashMap<>();
         for (Future<Map<String, String>> future : futures) {
             try {
                 result.putAll(future.get());
@@ -57,7 +57,7 @@ public class DanasService {
         @Override
         public Map<String, String> call() {
             logger.info("Fetching news from URL: {}", url);
-            Map<String, String> result = new TreeMap<>();
+            Map<String, String> result = new HashMap<>();
             Document document;
             try {
                 document = Jsoup.connect(url).get();
