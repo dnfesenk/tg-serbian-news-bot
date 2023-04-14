@@ -1,18 +1,18 @@
 package com.denisfesenko;
 
 import com.denisfesenko.service.DanasService;
+import com.denisfesenko.service.GoogleTranslateService;
 import com.denisfesenko.service.MongoService;
-import com.denisfesenko.service.OpenAiService;
 import com.denisfesenko.service.TelegramSenderService;
-import com.denisfesenko.util.StringUtils;
+import com.denisfesenko.util.Constants;
+import com.denisfesenko.util.GoogleCredentialsHelper;
+import com.denisfesenko.util.Utils;
+import com.google.auth.oauth2.GoogleCredentials;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -22,18 +22,23 @@ public class TgSerbianNewsBot {
     private static final Logger logger = LoggerFactory.getLogger(TgSerbianNewsBot.class);
 
     public static void main(String[] args) {
-        LocalDateTime now = LocalDateTime.now();
-        ZoneId belgradeZone = ZoneId.of("Europe/Belgrade");
-        ZonedDateTime belgradeDateTime = now.atZone(belgradeZone);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd\\.MM\\.yyyy HH:mm");
-        String formattedDate = belgradeDateTime.format(formatter);
+        String formattedDate = Utils.getCurrentBelgradeDateTimeAsString();
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+
         Map<String, String> news = DanasService.getNews();
         Map<String, String> filteredNews = MongoService.filterAndAddRecords(news);
         if (!filteredNews.isEmpty()) {
-            Map<String, String> translatedNews = new OpenAiService().translate(filteredNews);
+            GoogleCredentials googleCredentials = null;
+            try {
+                googleCredentials = GoogleCredentialsHelper.createFromBase64EvnVar();
+            } catch (IOException e) {
+                logger.error("Error fetching {}", Constants.GOOGLE_APPLICATION_CREDENTIALS, e);
+                System.exit(1);
+            }
+
+            Map<String, String> translatedNews = new GoogleTranslateService(googleCredentials).translate(filteredNews);
             Map<String, String> politics = new HashMap<>();
             Map<String, String> economics = new HashMap<>();
             Map<String, String> society = new HashMap<>();
@@ -71,12 +76,11 @@ public class TgSerbianNewsBot {
             stringBuilder.append("\n\n");
             for (Map.Entry<String, String> entry : newsBlock.entrySet()) {
                 stringBuilder.append("\uD83D\uDD38 ");
-                stringBuilder.append("[").append(StringUtils.escapeString(entry.getValue())).append("]");
+                stringBuilder.append("[").append(Utils.escapeTgString(entry.getValue())).append("]");
                 stringBuilder.append("(").append(entry.getKey()).append(")");
                 stringBuilder.append("\n\n");
             }
-            TelegramSenderService telegramSenderService = new TelegramSenderService(System.getenv("TG_BOT_TOKEN"));
-            telegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
+            TelegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
         }
     }
 }

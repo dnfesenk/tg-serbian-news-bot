@@ -46,7 +46,7 @@ public class OpenAiService {
                     RequestBody requestBody = RequestBody.create(objectMapper.writeValueAsString(openAiRequest), MediaType.parse("application/json"));
                     Request request = new Request.Builder()
                             .url(Constants.OPENAI_URL)
-                            .addHeader("Authorization", "Bearer " + System.getenv("OPENAI_TOKEN"))
+                            .addHeader("Authorization", "Bearer " + Constants.OPENAI_TOKEN)
                             .post(requestBody)
                             .build();
                     logger.info("OpenAI request: {}", openAiRequest);

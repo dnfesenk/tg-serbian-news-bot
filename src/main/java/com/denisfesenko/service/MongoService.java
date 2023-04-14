@@ -20,7 +20,7 @@ public class MongoService {
     public static Map<String, String> filterAndAddRecords(Map<String, String> news) {
         logger.info("Filtering and adding news records...");
         Map<String, String> filteredNews = new HashMap<>();
-        try (MongoClient mongoClient = MongoClients.create(System.getenv("MONGO_CONNECTION_STRING"))) {
+        try (MongoClient mongoClient = MongoClients.create(Constants.MONGO_CONNECTION_STRING)) {
             MongoDatabase database = mongoClient.getDatabase(Constants.MONGO_DATABASE_NAME);
             MongoCollection<Document> collection = database.getCollection(Constants.MONGO_COLLECTION_NAME);
 

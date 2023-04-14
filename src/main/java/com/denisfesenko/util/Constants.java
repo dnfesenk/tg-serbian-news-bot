@@ -3,6 +3,12 @@ package com.denisfesenko.util;
 import java.util.List;
 
 public class Constants {
+    public static final String GOOGLE_APPLICATION_CREDENTIALS = "GOOGLE_APPLICATION_CREDENTIALS";
+
+    public static final String MONGO_CONNECTION_STRING = System.getenv("MONGO_CONNECTION_STRING");
+    public static final String OPENAI_TOKEN = System.getenv("OPENAI_TOKEN");
+    public static final String TG_BOT_TOKEN = System.getenv("TG_BOT_TOKEN");
+    public static final String GOOGLE_APPLICATION_CREDENTIALS_BASE64 = System.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64");
 
     public static final String MONGO_DATABASE_NAME = "SerbianNews";
     public static final String MONGO_COLLECTION_NAME = "UrlsCollection";
