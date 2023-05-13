@@ -22,6 +22,12 @@ public class Constants {
     public static final String HREF = "href";
     public static final String URL = "url";
 
+    public static final String SERBIAN_NEWS_DIGEST = "\uD83D\uDCE3 Дайджест новостей Сербии на ";
+    public static final String POLITICS_BLOCK_TITLE = "\uD83C\uDFDB️️️ Политика";
+    public static final String ECONOMICS_BLOCK_TITLE = "\uD83D\uDCB0 Экономика";
+    public static final String SOCIETY_BLOCK_TITLE = "\uD83D\uDC65️ Общество";
+    public static final String OTHER_BLOCK_TITLE = "\uD83D\uDD39 Прочее";
+
     private Constants() {
     }
 }

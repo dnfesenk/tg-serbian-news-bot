@@ -9,7 +9,8 @@ public class Utils {
 
     public static String escapeTgString(String s) {
         return s.replace(".", "\\.").replace("(", "\\(").replace(")", "\\)")
-                .replace("-", "\\-").replace(">", "\\>").replace("<", "\\<");
+                .replace("-", "\\-").replace(">", "\\>").replace("<", "\\<")
+                .replace("&quot;", "\"");
     }
 
     public static String getCurrentBelgradeDateTimeAsString() {

@@ -56,10 +56,10 @@ public class TgSerbianNewsBot {
                 }
             }
 
-            sendNewsBlock(politics, "\uD83C\uDFDB️️️ Политика", formattedDate);
-            sendNewsBlock(economics, "\uD83D\uDCB0 Экономика", formattedDate);
-            sendNewsBlock(society, "\uD83D\uDC65️ Общество", formattedDate);
-            sendNewsBlock(other, "\uD83D\uDD39 Прочее", formattedDate);
+            sendNewsBlock(politics, Constants.POLITICS_BLOCK_TITLE, formattedDate);
+            sendNewsBlock(economics, Constants.ECONOMICS_BLOCK_TITLE, formattedDate);
+            sendNewsBlock(society, Constants.SOCIETY_BLOCK_TITLE, formattedDate);
+            sendNewsBlock(other, Constants.OTHER_BLOCK_TITLE, formattedDate);
         }
         stopWatch.stop();
 
@@ -69,18 +69,36 @@ public class TgSerbianNewsBot {
     private static void sendNewsBlock(Map<String, String> newsBlock, String blockTitle, String formattedDate) {
         if (!newsBlock.isEmpty()) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("\uD83D\uDCE3 Дайджест новостей Сербии на ");
+            stringBuilder.append(Constants.SERBIAN_NEWS_DIGEST);
             stringBuilder.append(formattedDate);
             stringBuilder.append("\n\n");
             stringBuilder.append(blockTitle);
             stringBuilder.append("\n\n");
+
+            int currentMessageIndex = 1; // Keep track of current message index.
             for (Map.Entry<String, String> entry : newsBlock.entrySet()) {
-                stringBuilder.append("\uD83D\uDD38 ");
-                stringBuilder.append("[").append(Utils.escapeTgString(entry.getValue())).append("]");
-                stringBuilder.append("(").append(entry.getKey()).append(")");
-                stringBuilder.append("\n\n");
+                String currentEntry = "\uD83D\uDD38 " + "[" + Utils.escapeTgString(entry.getValue()) + "]" + "(" + entry.getKey() + ")" + "\n\n";
+                if (stringBuilder.length() + currentEntry.length() > 4096) {
+                    // If the current entry would exceed the limit, send the message and start a new one.
+                    TelegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
+                    stringBuilder = new StringBuilder(); // Reset the stringBuilder
+                    stringBuilder.append(Constants.SERBIAN_NEWS_DIGEST);
+                    stringBuilder.append(formattedDate);
+                    stringBuilder.append("\n\n");
+                    stringBuilder.append(blockTitle);
+                    stringBuilder.append(" (Продолжение ");
+                    stringBuilder.append(currentMessageIndex);
+                    stringBuilder.append(")");
+                    stringBuilder.append("\n\n");
+                    currentMessageIndex++;
+                }
+                stringBuilder.append(currentEntry); // Add current entry to the stringBuilder.
             }
-            TelegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
+            // If there is remaining content to send.
+            if (stringBuilder.length() > 0) {
+                TelegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
+            }
         }
     }
+
 }
