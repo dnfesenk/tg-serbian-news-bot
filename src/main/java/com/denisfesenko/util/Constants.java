@@ -10,6 +10,8 @@ public class Constants {
     public static final String TG_BOT_TOKEN = System.getenv("TG_BOT_TOKEN");
     public static final String GOOGLE_APPLICATION_CREDENTIALS_BASE64 = System.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64");
 
+    public static final String TG_BOT_CHANNEL_ID = System.getenv("TG_BOT_CHANNEL_ID");
+
     public static final String MONGO_DATABASE_NAME = "SerbianNews";
     public static final String MONGO_COLLECTION_NAME = "UrlsCollection";
     public static final List<String> DANAS_URLS = List.of("https://www.danas.rs/najnovije-vesti/",

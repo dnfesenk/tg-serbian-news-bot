@@ -80,7 +80,7 @@ public class TgSerbianNewsBot {
                 String currentEntry = "\uD83D\uDD38 " + "[" + Utils.escapeTgString(entry.getValue()) + "]" + "(" + entry.getKey() + ")" + "\n\n";
                 if (stringBuilder.length() + currentEntry.length() > 4096) {
                     // If the current entry would exceed the limit, send the message and start a new one.
-                    TelegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
+                    TelegramSenderService.sendMessageToChannel(Constants.TG_BOT_CHANNEL_ID, stringBuilder.toString());
                     stringBuilder = new StringBuilder(); // Reset the stringBuilder
                     stringBuilder.append(Constants.SERBIAN_NEWS_DIGEST);
                     stringBuilder.append(formattedDate);
@@ -96,7 +96,7 @@ public class TgSerbianNewsBot {
             }
             // If there is remaining content to send.
             if (stringBuilder.length() > 0) {
-                TelegramSenderService.sendMessageToChannel("-1001917579438", stringBuilder.toString());
+                TelegramSenderService.sendMessageToChannel(Constants.TG_BOT_CHANNEL_ID, stringBuilder.toString());
             }
         }
     }
