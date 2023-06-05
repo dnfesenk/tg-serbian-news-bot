@@ -29,6 +29,7 @@ public class Constants {
     public static final String ECONOMICS_BLOCK_TITLE = "\uD83D\uDCB0 Экономика";
     public static final String SOCIETY_BLOCK_TITLE = "\uD83D\uDC65️ Общество";
     public static final String OTHER_BLOCK_TITLE = "\uD83D\uDD39 Прочее";
+    public static final String CONTINUATION = " (Продолжение ";
 
     private Constants() {
     }
